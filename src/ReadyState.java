@@ -8,12 +8,14 @@ public class ReadyState implements State {
     @Override
     public void insertCoin(double amt) {
         vendingMachine.setFunds(amt);
+        System.out.println("Funds: " + vendingMachine.getFunds());
+        vendingMachine.setState(vendingMachine.getCoinsInsertedState());
     }
 
     @Override
     public void inputItemCode(String code) {
         String productCode = vendingMachine.getProductCode();
-        int price = vendingMachine.getPrice(code);
+        double price = vendingMachine.getPrice(code);
 
         if( productCode != null || price != -1 )
             System.out.println(  );
