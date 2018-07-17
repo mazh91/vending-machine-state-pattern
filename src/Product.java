@@ -1,21 +1,13 @@
 public class Product {
 
-    String productCode;
     String description;
     double price;
+    int count;
 
-    public Product(String productCode, String description, double price){
-        this.productCode = productCode;
+    public Product(String description, double price, int count){
         this.description = description;
         this.price = price;
-    }
-
-    public String getProductCode() {
-        return productCode;
-    }
-
-    public void setProductCode(String productCode) {
-        this.productCode = productCode;
+        this.count = count;
     }
 
     public String getDescription() {
