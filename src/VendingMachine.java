@@ -1,3 +1,4 @@
+import java.util.Map;
 
 public class VendingMachine {
 
@@ -5,14 +6,22 @@ public class VendingMachine {
     private String productCode;
     private Product product;
     private State state;
-    private State readyState, codeInsertedState, coinsInsertedState,
+    private State readyState, coinsInsertedState,
             soldState, soldOutState;
+    private Map<String, Product> productMap;
 
-    public VendingMachine(){
-        this.state = new ReadyState(this);
+    public VendingMachine(Map<String, Product> productMap){
+        if(state == null)
+            state = getReadyState();
+        this.productMap = productMap;
     }
 
     public Product getProduct() {
+        return product;
+    }
+
+    public Product getProductByKey(String key) {
+        product = productMap.get(key);
         return product;
     }
 
@@ -34,12 +43,6 @@ public class VendingMachine {
         return readyState;
     }
 
-    public State getCodeInsertedState() {
-        if(codeInsertedState == null)
-            codeInsertedState = new CodeInsertedState(this);
-        return codeInsertedState;
-    }
-
     public State getCoinsInsertedState() {
         if(coinsInsertedState == null)
             coinsInsertedState = new CoinsInsertedState(this);
@@ -58,8 +61,14 @@ public class VendingMachine {
         return soldOutState;
     }
 
-    public void setFunds(double amt){
+    public void addFunds(double amt){
         funds += amt;
+    }
+    public void reduceFunds(double amt){
+        funds -= amt;
+    }
+    public void resetFunds(){
+        funds = 0.0;
     }
     public double getFunds() {
         return funds;
@@ -72,10 +81,24 @@ public class VendingMachine {
         return  productCode;
     }
 
-    public double getPrice(String key){
-        //Double price = product.getPrice();
-        if(product != null)
-            return product.getPrice();
-        return -1;
+    public double getPrice(Product product){
+        return product.getPrice();
+    }
+
+    // Operator methods
+    public void insertCoin(double amt) {
+        getState().insertCoin(amt);
+    }
+
+    public void inputItemCode(String code) {
+        getState().inputItemCode(code);
+    }
+
+    public void returnCoins() {
+        getState().returnCoins();
+    }
+
+    public void dispenseItem() {
+        getState().dispenseItem();
     }
 }
