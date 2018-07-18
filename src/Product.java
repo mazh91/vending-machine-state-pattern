@@ -1,8 +1,8 @@
 public class Product {
 
-    String description;
-    double price;
-    int count;
+    private String description;
+    private double price;
+    private int count;
 
     public Product(String description, double price, int count){
         this.description = description;
@@ -24,5 +24,13 @@ public class Product {
 
     public void setPrice(double price) {
         this.price = price;
+    }
+
+    public int getCount() {
+        return count;
+    }
+
+    public void setCount(int count) {
+        this.count = count;
     }
 }
