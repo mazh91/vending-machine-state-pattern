@@ -1,5 +1,5 @@
 public class ReadyState implements State {
-    VendingMachine vendingMachine;
+    private VendingMachine vendingMachine;
 
     public ReadyState(VendingMachine vendingMachine) {
         this.vendingMachine = vendingMachine;
@@ -7,18 +7,19 @@ public class ReadyState implements State {
 
     @Override
     public void insertCoin(double amt) {
-        vendingMachine.setFunds(amt);
+        vendingMachine.addFunds(amt);
         System.out.println("Funds: " + vendingMachine.getFunds());
         vendingMachine.setState(vendingMachine.getCoinsInsertedState());
     }
 
     @Override
     public void inputItemCode(String code) {
-        String productCode = vendingMachine.getProductCode();
-        double price = vendingMachine.getPrice(code);
+        Product product = vendingMachine.getProductByKey(code);
 
-        if( productCode != null || price != -1 )
-            System.out.println(  );
+        if( product != null) {
+            double price = vendingMachine.getPrice(product);
+            System.out.println(vendingMachine.getProduct().getDescription() + ": " + price);
+        }
         else
             System.err.println("Error: could not retrieve product info");
     }
@@ -30,6 +31,6 @@ public class ReadyState implements State {
 
     @Override
     public void dispenseItem() {
-        System.out.println("Abort: no coins inserted");
+        System.err.println("Operation not possible");
     }
 }

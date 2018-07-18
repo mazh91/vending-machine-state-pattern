@@ -13,7 +13,10 @@ public class CoinsInsertedState implements State {
 
     @Override
     public void inputItemCode(String code) {
-        double price = vendingMachine.getPrice(code);
+        Product product = vendingMachine.getProduct();
+        if(product == null)
+            product = vendingMachine.getProductByKey(code);
+        double price = vendingMachine.getPrice(product);
         double funds = vendingMachine.getFunds();
 
         if( funds >= price ){
